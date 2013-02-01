@@ -708,4 +708,3 @@ function wps_translation_mangler($translation, $text, $domain) {
 add_filter('gettext', 'wps_translation_mangler', 10, 4);
 
 
-?>

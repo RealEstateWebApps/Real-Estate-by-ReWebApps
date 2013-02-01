@@ -346,4 +346,3 @@ function remove_neighborhoods_row_actions( $actions, $post )
 
 	return $actions;
 }
-?>

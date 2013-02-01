@@ -454,4 +454,3 @@ function agents_custom_columns($column){
 }
 
 
-?>

@@ -196,4 +196,3 @@ function remove_testimonials_row_actions( $actions, $post )
 
 	return $actions;
 }
-?>
