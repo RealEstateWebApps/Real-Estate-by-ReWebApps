@@ -18,9 +18,6 @@ require_once('modules/neighborhoods.php');
 // Load Agents Module
 require_once('modules/agents.php');
 
-// Load Resources Module
-require_once('modules/resources.php');
-
 // Load Testimonials Module
 require_once('modules/testimonials.php');
 ?>
