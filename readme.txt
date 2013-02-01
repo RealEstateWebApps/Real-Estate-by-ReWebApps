@@ -1,7 +1,7 @@
 === Real Estate by imFORZA ===
 Contributors: Brandon Hubbard
 Donate link: http://www.imforza.com/
-Tags: real estate, realestate, properties, agents, resources, imFORZA, nextgen-gallery, nextgen gallery
+Tags: real estate, realestate, properties, agents, imFORZA, nextgen-gallery, nextgen gallery
 
 == Description ==
 
@@ -11,6 +11,7 @@ The Real Estate by imFORZA plugin for wordpress gives users the ability to manag
 == Credits ==
 
 Brandon Hubbard - @bhubbard
+Andrew Bowen
 
 
 == Installation ==
