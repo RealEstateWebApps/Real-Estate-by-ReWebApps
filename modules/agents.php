@@ -28,7 +28,7 @@ function agents_listing_register() {
 		'publicly_queryable' => true,
 		'show_ui' => true,
 		'query_var' => true,
-		'menu_icon' =>  WP_PLUGIN_URL.  '/RealEstate/images/agents-icon.png',
+		'menu_icon' =>  WP_PLUGIN_URL.  '/real-estate-by-imforza/images/agents-icon.png',
 		'rewrite' => true,
 		'capability_type' => 'post',
 		'hierarchical' => false,

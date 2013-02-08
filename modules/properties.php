@@ -377,7 +377,7 @@ function property_listing_register() {
 		'publicly_queryable' => true,
 		'show_ui' => true,
 		'query_var' => true,
-		'menu_icon' =>  WP_PLUGIN_URL.  '/RealEstate/images/property-icon.png',
+		'menu_icon' =>  WP_PLUGIN_URL.  '/real-estate-by-imforza/images/property-icon.png',
 		'rewrite' => true,
 		'capability_type' => 'post',
 		'hierarchical' => false,
