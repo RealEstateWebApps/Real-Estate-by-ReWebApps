@@ -194,7 +194,7 @@ function neighborhood_register() {
 		'show_ui' => true,
 		'query_var' => true,
 		'menu_icon' =>  WP_PLUGIN_URL.  '/real-estate-by-imforza/images/community-icon.png',
-		'rewrite' => true,
+		'rewrite' => array('true', 'with_front' => false),
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => null,
