@@ -1,5 +1,8 @@
 <?php
 
+################################################################################
+// Testimonial Pagination
+################################################################################
 function testimonials_paginate() {
 	global $wp_query, $wp_rewrite;
 	$wp_query->query_vars['paged'] > 1 ? $current = $wp_query->query_vars['paged'] : $current = 1;
@@ -18,24 +21,28 @@ function testimonials_paginate() {
 
 $testimonials_prefix = 'dbt_';
 $testimonials_meta_box = array(
-    'id' => 'testimonials-meta-box',
-    'title' => 'Testimonials Options',
-    'page' => 'testimonials',
-    'context' => 'normal',
-    'priority' => 'high',
-    'fields' => array(
-        array(
-            'name' => 'Select an Agent',
-            'id' => $testimonials_prefix . 'testimonials_agent_select',
-            'type' => 'select_agent'
-        )   
-    )
+	'id' => 'testimonials-meta-box',
+	'title' => 'Testimonials Options',
+	'page' => 'testimonials',
+	'context' => 'normal',
+	'priority' => 'high',
+	'fields' => array(
+		array(
+			'name' => 'Select an Agent',
+			'id' => $testimonials_prefix . 'testimonials_agent_select',
+			'type' => 'select_agent'
+		)   
+	)
 );
+
+################################################################################
+// Testimonial Add Meta Box
+################################################################################
 add_action('admin_menu', 'testimonials_add_box');
 // Add meta box
 function testimonials_add_box() {
-    global $testimonials_meta_box;
-    add_meta_box($testimonials_meta_box['id'], $testimonials_meta_box['title'], 'testimonials_show_box', $testimonials_meta_box['page'], $testimonials_meta_box['context'], $testimonials_meta_box['priority']);
+	global $testimonials_meta_box;
+	add_meta_box($testimonials_meta_box['id'], $testimonials_meta_box['title'], 'testimonials_show_box', $testimonials_meta_box['page'], $testimonials_meta_box['context'], $testimonials_meta_box['priority']);
 }
 /* gets the property agents dropdown */
 function get_testimonials_agent_dropdown() {
@@ -55,15 +62,15 @@ function get_testimonials_agent_dropdown() {
 }
 // Callback function to show fields in meta box
 function testimonials_show_box() {
-    global $testimonials_meta_box, $post;
-    // Use nonce for verification
-    echo '<input type="hidden" name="testimonials_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
-    echo '<table class="form-table">';
-    foreach ($testimonials_meta_box['fields'] as $field) {
-        // get current post meta data
-        $testimonials_meta = get_post_meta($post->ID, $field['id'], true);
-        switch ($field['type']) {
-            case 'select_agent':
+	global $testimonials_meta_box, $post;
+	// Use nonce for verification
+	echo '<input type="hidden" name="testimonials_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
+	echo '<table class="form-table">';
+	foreach ($testimonials_meta_box['fields'] as $field) {
+		// get current post meta data
+		$testimonials_meta = get_post_meta($post->ID, $field['id'], true);
+		switch ($field['type']) {
+			case 'select_agent':
 				echo '<tr><td colspan="2"><h4>Assign Agents or Multiple Agents</h4></td></tr><tr>',
 				'<th style="width:15%"><label for="', $field['id'], '">', $field['name'], '</label></th>',
 				'<td>';
@@ -75,40 +82,44 @@ function testimonials_show_box() {
 				echo '</select>';
 				echo     '</td>','</tr>';
 			break;     
-        }
-    }
-    echo '</table>';
+		}
+	}
+	echo '</table>';
 }
 add_action('save_post', 'testimonials_save_data');
 // Save data from meta box
 function testimonials_save_data($post_id) {
-    global $testimonials_meta_box;
-    // verify nonce
-    if (!wp_verify_nonce( isset($_POST['testimonials_meta_box_nonce']), basename(__FILE__))) {
-        return $post_id;
-    }
-    // check autosave
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return $post_id;
-    }
-    // check permissions
-    if ('page' == $_POST['post_type']) {
-        if (!current_user_can('edit_page', $post_id)) {
-            return $post_id;
-        }
-    } elseif (!current_user_can('edit_post', $post_id)) {
-        return $post_id;
-    }
-    foreach ($testimonials_meta_box['fields'] as $field) {
-        $testimonials_old = get_post_meta($post_id, $field['id'], true);
-        $testimonials_new = $_POST[$field['id']];
-        if ($testimonials_new && $testimonials_new != $testimonials_old) {
-            update_post_meta($post_id, $field['id'], $testimonials_new);
-        } elseif ('' == $testimonials_new && $testimonials_old) {
-            delete_post_meta($post_id, $field['id'], $testimonials_old);
-        }
-    }
+	global $testimonials_meta_box;
+	// verify nonce
+	if (!wp_verify_nonce( isset($_POST['testimonials_meta_box_nonce']), basename(__FILE__))) {
+		return $post_id;
+	}
+	// check autosave
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+		return $post_id;
+	}
+	// check permissions
+	if ('page' == $_POST['post_type']) {
+		if (!current_user_can('edit_page', $post_id)) {
+			return $post_id;
+		}
+	} elseif (!current_user_can('edit_post', $post_id)) {
+		return $post_id;
+	}
+	foreach ($testimonials_meta_box['fields'] as $field) {
+		$testimonials_old = get_post_meta($post_id, $field['id'], true);
+		$testimonials_new = $_POST[$field['id']];
+		if ($testimonials_new && $testimonials_new != $testimonials_old) {
+			update_post_meta($post_id, $field['id'], $testimonials_new);
+		} elseif ('' == $testimonials_new && $testimonials_old) {
+			delete_post_meta($post_id, $field['id'], $testimonials_old);
+		}
+	}
 }
+
+################################################################################
+// Testimonial Custom Post Type
+################################################################################
 add_action('init', 'testimonials_register');
 function testimonials_register() {
 	$labels = array(
@@ -141,8 +152,9 @@ function testimonials_register() {
 	register_post_type( 'testimonials' , $args );
 }
 
-/* Property Agent */
-
+################################################################################
+// Assign Testimonials to Agents
+################################################################################
 function the_testimonials_agent() {
 	$get_testimonials_agent = get_post_meta(get_the_ID(), 'dbt_testimonials_agent_select', true);
 	$the_testimonials_agent = $get_testimonials_agent;
@@ -163,12 +175,16 @@ function the_testimonials_agent() {
 			if ($i == $total-1) echo ' and ';
 		}
 	echo '</li><li class="clear"></li>';
-	
+
 	 }
 }
+
+################################################################################
+// Testimonials per Page
+################################################################################
 function testimonials_posts_per_page($query) {
-    if ( isset($query->query_vars['post_type']) == 'testimonials' ) $query->query_vars['posts_per_page'] = 10;
-    return $query;
+	if ( isset($query->query_vars['post_type']) == 'testimonials' ) $query->query_vars['posts_per_page'] = 10;
+	return $query;
 }
 if ( !is_admin() ) add_filter( 'pre_get_posts', 'testimonials_posts_per_page' );
 
@@ -188,3 +204,4 @@ function remove_testimonials_row_actions( $actions, $post )
 
 	return $actions;
 }
+
