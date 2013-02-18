@@ -232,6 +232,7 @@ function prop_show_box() {
 		
 		switch ($field['type']) {
 			case 'gal_select':
+				echo '<tr><td colspan="2"><h4>Property Gallery (Requires NextGen-Gallery Plugin)</h4></td></tr>';
 				echo '<tr>',
 				'<th style="width:15%"><label for="', $field['id'], '">', $field['name'], '</label></th>',
 				'<td>';
@@ -239,8 +240,10 @@ function prop_show_box() {
 				echo '<option value="none">No Gallery</option>';
 				get_ngg_prop_gallerydropdown($prop_meta);
 				echo '</select>';
+				
+				echo '&emsp; <a href="http://plugin.dev/wp-admin/admin.php?page=nggallery-manage-gallery&mode=edit&gid=' .$prop_meta . '">Edit Gallery</a>';
 				echo     '</td>','</tr>';
-				echo '<tr>Note: Requires NextGenGallery Plugin</tr>';
+				echo '<tr><td colspan="2"><strong>Note:</strong>&emsp; You must first save or update the property before using the "Edit Gallery" link.</td></tr>';
 				echo '<tr><td colspan="2"><hr style="background:#ddd; border:0px; height:1px; position:relative; width:100%;" /><h4>Property Price Information</h4></td></tr>';
 			break;
 			case 'price':
