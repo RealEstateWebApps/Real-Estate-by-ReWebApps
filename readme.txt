@@ -4,7 +4,7 @@ Author URL: http://www.imforza.com
 Contributors: Brandon Hubbard
 Donate link: http://www.imforza.com/
 Tested up to: 3.5
-Stable tag: 1.3
+Stable tag: 1.4
 Tags: real estate, realestate, properties, agents, imFORZA, nextgen-gallery, nextgen gallery, real estate wordpress
 License: GPLv2 or later  
 

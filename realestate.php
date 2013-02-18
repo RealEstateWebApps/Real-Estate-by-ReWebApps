@@ -3,7 +3,7 @@
 Plugin Name: Real Estate by imFORZA
 Plugin URI: http://realestate.imforza.com
 Description: A custom Real Estate plugin that offers properties, neighborhoods, agents, and testimonials. Requires the NextGen-Gallery plugin for property images.
-Version: 1.3
+Version: 1.4
 Author: imFORZA
 Author URI: http://www.imforza.com/
 License: GPL3
