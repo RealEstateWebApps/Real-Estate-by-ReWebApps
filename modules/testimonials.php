@@ -131,7 +131,7 @@ function testimonials_register() {
 		'show_ui' => true,
 		'query_var' => true,
 		'menu_icon' =>  WP_PLUGIN_URL.  '/real-estate-by-imforza/images/testimonials-icon.png',
-		'rewrite' => true,
+		'rewrite' => array('true', 'with_front' => false),
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => null,
@@ -139,14 +139,6 @@ function testimonials_register() {
 		'has_archive' => true
 	  ); 
 	register_post_type( 'testimonials' , $args );
-}
-add_action('admin_init', 'plugin_load');
-add_action('init', 'plugin_load');
-
-function plugin_load()
-{
-	wp_register_style("plugin_style", "http://fonts.googleapis.com/css?family=Tangerine");
-	wp_enqueue_style("plugin_style","http://fonts.googleapis.com/css?family=Tangerine");
 }
 
 /* Property Agent */
