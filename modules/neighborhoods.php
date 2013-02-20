@@ -346,3 +346,43 @@ function remove_neighborhoods_row_actions( $actions, $post )
 
 	return $actions;
 }
+
+
+
+
+################################################################################
+// Load Template Files
+################################################################################
+
+add_filter( 'template_include', 'include_neighborhoods_template', 1 );
+
+function include_neighborhoods_template( $template_path ) {
+    if ( get_post_type() == 'neighborhoods' ) {
+    	// Single Property Template
+        if ( is_single() ) {
+            // checks if the file exists in the theme first,
+            // otherwise serve the file from the plugin
+            if ( $theme_file = locate_template( array ( 'single-neighborhoods.php' ) ) ) {
+                $template_path = $theme_file;
+            } else {
+                $template_path = plugin_dir_path( __FILE__ ) . '../templates/single-neighborhoods.php';
+            }
+        }
+        
+        // Archive Template
+        if ( is_archive() ) {
+            // checks if the file exists in the theme first,
+            // otherwise serve the file from the plugin
+            if ( $theme_file = locate_template( array ( 'archive-neighborhoods.php' ) ) ) {
+                $template_path = $theme_file;
+            } else {
+                $template_path = plugin_dir_path( __FILE__ ) . '../templates/archive-neighborhoods.php';
+            }
+        }
+    
+        
+    }
+    return $template_path;
+}
+
+

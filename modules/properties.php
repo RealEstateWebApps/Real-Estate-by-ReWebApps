@@ -392,8 +392,8 @@ function property_listing_register() {
 ################################################################################
 // Register Taxonomies - Status, Type
 ################################################################################
- 	register_taxonomy("property-status", array("properties"), array("hierarchical" => true, "label" => "Property Status", "rewrite" => array('slug' => '/properties/property-status')));
- 	register_taxonomy("property-type", array("properties"), array("hierarchical" => true, "label" => "Property Type", "rewrite" => array('slug' => '/properties/property-type')));
+ 	register_taxonomy("property-status", array("properties"), array("hierarchical" => true, "label" => "Property Status", "rewrite" => array('slug' => '/properties/status', 'with_front' => false)));
+ 	register_taxonomy("property-type", array("properties"), array("hierarchical" => true, "label" => "Property Type", "rewrite" => array('slug' => '/properties/type', 'with_front' => false)));
 	register_post_type( 'properties' , $args );
 }
 
@@ -711,3 +711,41 @@ function wps_translation_mangler($translation, $text, $domain) {
 add_filter('gettext', 'wps_translation_mangler', 10, 4);
 
 
+
+
+
+
+################################################################################
+// Load Template Files
+################################################################################
+
+add_filter( 'template_include', 'include_properties_template', 1 );
+
+function include_properties_template( $template_path ) {
+    if ( get_post_type() == 'properties' ) {
+    	// Single Property Template
+        if ( is_single() ) {
+            // checks if the file exists in the theme first,
+            // otherwise serve the file from the plugin
+            if ( $theme_file = locate_template( array ( 'single-properties.php' ) ) ) {
+                $template_path = $theme_file;
+            } else {
+                $template_path = plugin_dir_path( __FILE__ ) . '../templates/single-properties.php';
+            }
+        }
+        
+        // Archive Template
+        if ( is_archive() ) {
+            // checks if the file exists in the theme first,
+            // otherwise serve the file from the plugin
+            if ( $theme_file = locate_template( array ( 'archive-properties.php' ) ) ) {
+                $template_path = $theme_file;
+            } else {
+                $template_path = plugin_dir_path( __FILE__ ) . '../templates/archive-properties.php';
+            }
+        }
+    
+        
+    }
+    return $template_path;
+}
