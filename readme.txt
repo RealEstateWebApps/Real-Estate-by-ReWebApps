@@ -1,4 +1,4 @@
-=== Real Estate by imFORZA ===
+=== Real Estate by ReWebApps ===
 Author: ReWebApps
 Author URL: http://www.realestatewebapps.com/
 Contributors: Andrew Bowen, Brandon Hubbard
@@ -27,7 +27,7 @@ Brandon Hubbard - @bhubbard
 = Basic Usage: =
 
 1. Download, install, and activate the NextGEN Gallery plugin.
-1. Download, install, and activate this plugin2.
+1. Download, install, and activate this plugin.
 1. From your Wordpress Dashboard, you can manage Properties, Neighborhoods, Agents, Resources, and Testimonials.
 1. Add Property Galleries via the NextGen Gallery plugin, and then edit your property to choose the appropriate gallery.
 1. Modify your theme to display properties, templates coming soon.
