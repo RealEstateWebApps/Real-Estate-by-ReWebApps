@@ -1,12 +1,12 @@
-=== Real Estate by imFORZA ===
-Author: imFORZA
-Author URL: http://www.imforza.com
-Contributors: Brandon Hubbard
-Donate link: http://www.imforza.com/
+=== Real Estate by ReWebApps ===
+Author: ReWebApps
+Author URL: http://www.realestatewebapps.com/
+Contributors: Andrew Bowen, Brandon Hubbard
+Donate link: http://www.realestatewebapps.com/
 Tested up to: 3.5
 Stable tag: 1.4
-Tags: real estate, realestate, properties, agents, imFORZA, nextgen-gallery, nextgen gallery, real estate wordpress
-License: GPLv2 or later  
+Tags: real estate, realestate, properties, agents, ReWebApps, Real Estate Web Apps, nextgen-gallery, nextgen gallery, real estate wordpress
+License: GPLv3
 
 == Description ==
 
@@ -19,16 +19,15 @@ Note: Currently this plugin is in beta, in order to use you would need to create
 
 == Credits ==
 
-Brandon Hubbard - @bhubbard
 Andrew Bowen
-
+Brandon Hubbard - @bhubbard
 
 == Installation ==
 
 = Basic Usage: =
 
 1. Download, install, and activate the NextGEN Gallery plugin.
-1. Download, install, and activate this plugin (Real Estate by imFORZA).
+1. Download, install, and activate this plugin.
 1. From your Wordpress Dashboard, you can manage Properties, Neighborhoods, Agents, Resources, and Testimonials.
 1. Add Property Galleries via the NextGen Gallery plugin, and then edit your property to choose the appropriate gallery.
 1. Modify your theme to display properties, templates coming soon.
