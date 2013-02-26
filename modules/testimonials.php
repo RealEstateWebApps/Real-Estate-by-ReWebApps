@@ -212,7 +212,7 @@ function remove_testimonials_row_actions( $actions, $post )
 
 add_filter( 'template_include', 'include_testimonials_template', 1 );
 
-function include_properties_template( $template_path ) {
+function include_testimonials_template( $template_path ) {
 	if ( get_post_type() == 'testimonials' ) {
 		// Single Property Template
 		if ( is_single() ) {

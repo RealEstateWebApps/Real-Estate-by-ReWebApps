@@ -1,18 +1,8 @@
 <?php get_header(); ?>
 
-<div class="container">
-<div class="page-wrapper">
-
-<div class="row">
-
-<div class="span3">
-		<?php get_sidebar(); ?>
-  </div><!-- end span4 -->
-
-  <div class="span9">
-	
-        
-            <div id="leftpanel">
+  
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
 
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -27,24 +17,11 @@
 		<p><?php _e('Sorry, no posts matched your criteria.', 'kubrick'); ?></p>
 
 <?php endif; ?>
+
+	</div>
 	</div>
 
 
 
-
-
-
-
-  </div><!-- end span8 -->
-  
-  
-  
-  </div>
-</div>
-
-  <div class="row">
-  <div class="page-wrapper-bottom"></div>
-  </div>
-
-</div>
+<?php get_sidebar(); ?>
 <?php get_footer(); ?>

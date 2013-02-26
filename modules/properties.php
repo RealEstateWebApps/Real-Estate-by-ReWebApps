@@ -392,13 +392,11 @@ function property_listing_register() {
 ################################################################################
 // Register Taxonomies - Status, Type
 ################################################################################
-<<<<<<< HEAD
- 	register_taxonomy("property-status", array("properties"), array("hierarchical" => true, "label" => "Property Status", "rewrite" => array('slug' => '/properties/status', 'with_front' => false)));
- 	register_taxonomy("property-type", array("properties"), array("hierarchical" => true, "label" => "Property Type", "rewrite" => array('slug' => '/properties/type', 'with_front' => false)));
-=======
+
+
  	register_taxonomy("property-status", array("properties"), array("hierarchical" => true, 'show_admin_column' => true,  "label" => "Property Status", "rewrite" => array('slug' => '/properties/property-status')));
  	register_taxonomy("property-type", array("properties"), array("hierarchical" => true, 'show_admin_column' => true,  "label" => "Property Type", "rewrite" => array('slug' => '/properties/property-type')));
->>>>>>> f7f92220aab5a9b20173bf4cfa0c4021606bbf35
+
 	register_post_type( 'properties' , $args );
 }
 
