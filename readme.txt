@@ -4,7 +4,7 @@ Author URL: http://www.realestatewebapps.com/
 Contributors: Andrew Bowen, Brandon Hubbard
 Donate link: http://www.realestatewebapps.com/
 Tested up to: 3.5
-Stable tag: 1.4
+Stable tag: 1.4.2
 Tags: real estate, realestate, properties, agents, ReWebApps, Real Estate Web Apps, nextgen-gallery, nextgen gallery, real estate wordpress
 License: GPLv3
 
@@ -12,7 +12,7 @@ License: GPLv3
 
 <h3>Currently in BETA release</h3>
 
-The Real Estate by imFORZA plugin for wordpress gives users the ability to manage Agents, Properties, and Neighborhoods all inside Wordpress. 
+The Real Estate by ReWebApps plugin for wordpress gives users the ability to manage Agents, Properties, and Neighborhoods all inside Wordpress. 
 
 Note: Currently this plugin is in beta, in order to use you would need to create template files within your theme. 
 

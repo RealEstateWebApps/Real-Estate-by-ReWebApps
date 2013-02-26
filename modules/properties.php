@@ -380,7 +380,7 @@ function property_listing_register() {
 		'publicly_queryable' => true,
 		'show_ui' => true,
 		'query_var' => true,
-		'menu_icon' =>  WP_PLUGIN_URL.  '/real-estate-by-imforza/images/property-icon.png',
+		'menu_icon' =>  WP_PLUGIN_URL.  '/real-estate-by-rewebapps/images/property-icon.png',
 		'rewrite' => array('true', 'with_front' => false),
 		'capability_type' => 'post',
 		'hierarchical' => false,
@@ -392,8 +392,13 @@ function property_listing_register() {
 ################################################################################
 // Register Taxonomies - Status, Type
 ################################################################################
+<<<<<<< HEAD
  	register_taxonomy("property-status", array("properties"), array("hierarchical" => true, "label" => "Property Status", "rewrite" => array('slug' => '/properties/status', 'with_front' => false)));
  	register_taxonomy("property-type", array("properties"), array("hierarchical" => true, "label" => "Property Type", "rewrite" => array('slug' => '/properties/type', 'with_front' => false)));
+=======
+ 	register_taxonomy("property-status", array("properties"), array("hierarchical" => true, 'show_admin_column' => true,  "label" => "Property Status", "rewrite" => array('slug' => '/properties/property-status')));
+ 	register_taxonomy("property-type", array("properties"), array("hierarchical" => true, 'show_admin_column' => true,  "label" => "Property Type", "rewrite" => array('slug' => '/properties/property-type')));
+>>>>>>> f7f92220aab5a9b20173bf4cfa0c4021606bbf35
 	register_post_type( 'properties' , $args );
 }
 
@@ -440,8 +445,6 @@ add_action('manage_properties_posts_custom_column', 'rewa_prop_cpt_custom_column
 function rewa_prop_cpt_columns($defaults) {
 	unset($defaults['author']);
 	$defaults['title'] = 'Property Name';
-    $defaults['property-status'] = 'Status';
-    $defaults['property-type'] = 'Type';
     $defaults['date'] = 'Listed';
     return $defaults;
 }
