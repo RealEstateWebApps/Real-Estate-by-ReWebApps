@@ -241,7 +241,7 @@ function prop_show_box() {
 				get_ngg_prop_gallerydropdown($prop_meta);
 				echo '</select>';
 				
-				echo '&emsp; <a href="http://plugin.dev/wp-admin/admin.php?page=nggallery-manage-gallery&mode=edit&gid=' .$prop_meta . '">Edit Gallery</a>';
+				echo '&emsp; <a href="'. home_url() .'/wp-admin/admin.php?page=nggallery-manage-gallery&mode=edit&gid=' .$prop_meta . '">Edit Gallery</a>';
 				echo     '</td>','</tr>';
 				echo '<tr><td colspan="2"><strong>Note:</strong>&emsp; You must first choose a gallery, then save or update the property before using the "Edit Gallery" link.</td></tr>';
 				echo '<tr><td colspan="2"><hr style="background:#ddd; border:0px; height:1px; position:relative; width:100%;" /><h4>Property Price Information</h4></td></tr>';
