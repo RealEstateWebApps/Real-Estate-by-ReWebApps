@@ -28,7 +28,7 @@ function agents_listing_register() {
 		'publicly_queryable' => true,
 		'show_ui' => true,
 		'query_var' => true,
-		'menu_icon' =>  WP_PLUGIN_URL.  '/real-estate-by-imforza/images/agents-icon.png',
+		'menu_icon' =>  WP_PLUGIN_URL.  '/real-estate-by-rewebapps/images/agents-icon.png',
 		'rewrite' => array('true', 'with_front' => false),
 		'capability_type' => 'post',
 		'hierarchical' => false,
@@ -227,7 +227,7 @@ function agents_listing_print_scripts() {
 	$pages = array('edit.php');
 	if (in_array($pagenow, $pages)) {
 		wp_enqueue_script('jquery-ui-sortable');
-		wp_enqueue_script('agents_sorting', WP_PLUGIN_URL. '/RealEstate/js/agentsorting.min.js');
+		wp_enqueue_script('agents_sorting', WP_PLUGIN_URL. '/real-estate-by-rewebapps/js/agentsorting.min.js');
 	}
 }
 add_action( 'admin_print_scripts', 'agents_listing_print_scripts' );
@@ -240,7 +240,7 @@ function agents_listing_print_styles() {
  
 	$pages = array('edit.php');
 	if (in_array($pagenow, $pages))
-		wp_enqueue_style('agent_listing_sorting', WP_PLUGIN_URL. '/RealEstate/css/agentsorting.css');
+		wp_enqueue_style('agent_listing_sorting', WP_PLUGIN_URL. '/real-estate-by-rewebapps/css/agentsorting.css');
 }
 add_action( 'admin_print_styles', 'agents_listing_print_styles' );
 

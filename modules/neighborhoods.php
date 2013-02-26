@@ -193,7 +193,7 @@ function neighborhood_register() {
 		'publicly_queryable' => true,
 		'show_ui' => true,
 		'query_var' => true,
-		'menu_icon' =>  WP_PLUGIN_URL.  '/real-estate-by-imforza/images/community-icon.png',
+		'menu_icon' =>  WP_PLUGIN_URL.  '/real-estate-by-rewebapps/images/community-icon.png',
 		'rewrite' => array('true', 'with_front' => false),
 		'capability_type' => 'post',
 		'hierarchical' => false,
@@ -205,7 +205,7 @@ function neighborhood_register() {
 ################################################################################
 // Neighborhood Category - Taxonomy
 ################################################################################
- 	register_taxonomy("neighborhood-category", array("neighborhoods"), array("hierarchical" => true, "label" => "Neighborhood Category", "rewrite" => array('slug' => 'neighborhood-category'), "query_var" => true));
+ 	register_taxonomy("neighborhood-category", array("neighborhoods"), array("hierarchical" => true, 'show_admin_column' => true, "label" => "Neighborhood Category", "rewrite" => array('slug' => 'neighborhood-category'), "query_var" => true));
 	register_post_type( 'neighborhoods' , $args );
 	
 }    
@@ -218,7 +218,7 @@ function neighborhood_register() {
 function neighborhood_admin_scripts() {
 wp_enqueue_script('media-upload');
 wp_enqueue_script('thickbox');
-wp_register_script('rewa-neighborhoods', WP_PLUGIN_URL.'/RealEstate/js/neighborhoods.min.js', array('jquery','media-upload','thickbox'));
+wp_register_script('rewa-neighborhoods', WP_PLUGIN_URL.'/real-estate-by-rewebapps/js/neighborhoods.min.js', array('jquery','media-upload','thickbox'));
 wp_enqueue_script('rewa-neighborhoods');
 }
  
@@ -278,7 +278,6 @@ add_action('manage_neighborhoods_posts_custom_column', 'rewa_cpt_neighborhood_cu
 function rewa_cpt_neighborhood_columns($defaults) {
 	$defaults['title'] = 'Neighborhood';
 	unset($defaults['author']);
-    $defaults['neighborhood-category'] = 'Neighborhood Category';
     return $defaults;
 }
 function rewa_cpt_neighborhood_custom_column($column_name, $post_id) {
