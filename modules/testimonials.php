@@ -205,3 +205,39 @@ function remove_testimonials_row_actions( $actions, $post )
 	return $actions;
 }
 
+
+################################################################################
+// Load Template Files
+################################################################################
+
+add_filter( 'template_include', 'include_testimonials_template', 1 );
+
+function include_properties_template( $template_path ) {
+	if ( get_post_type() == 'testimonials' ) {
+		// Single Property Template
+		if ( is_single() ) {
+			// checks if the file exists in the theme first,
+			// otherwise serve the file from the plugin
+			if ( $theme_file = locate_template( array ( 'single-testimonials.php' ) ) ) {
+				$template_path = $theme_file;
+			} else {
+				$template_path = plugin_dir_path( __FILE__ ) . '../templates/single-testimonials.php';
+			}
+		}
+
+		// Archive Template
+		if ( is_archive() ) {
+			// checks if the file exists in the theme first,
+			// otherwise serve the file from the plugin
+			if ( $theme_file = locate_template( array ( 'archive-testimonials.php' ) ) ) {
+				$template_path = $theme_file;
+			} else {
+				$template_path = plugin_dir_path( __FILE__ ) . '../templates/archive-testimonials.php';
+			}
+		}
+
+
+	}
+	return $template_path;
+}
+
