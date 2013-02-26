@@ -3,7 +3,7 @@
 Plugin Name: Real Estate by ReWebApps
 Plugin URI: http://realestate.imforza.com
 Description: A custom Real Estate plugin that offers properties, neighborhoods, agents, and testimonials. Requires the NextGen-Gallery plugin for property images.
-Version: 1.4.2
+Version: 1.4.3
 Author: ReWebApps
 Author URI: http://www.realestatewebapps.com/
 License: GPL3
