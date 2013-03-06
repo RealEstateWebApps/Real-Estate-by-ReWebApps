@@ -416,7 +416,7 @@ function prop_plugin_load()
 	wp_enqueue_script( 'jquery-ui-datepicker' );
 	
 	// Load Datepicker CSS
-	wp_enqueue_style('jquery-ui-custom', WP_PLUGIN_URL.'/real-estate-by-imforza/css/ui.datepicker.css' );
+	wp_enqueue_style('jquery-ui-custom', WP_PLUGIN_URL.'/real-estate-by-rewebapps/css/ui.datepicker.css' );
 	
 }
 
