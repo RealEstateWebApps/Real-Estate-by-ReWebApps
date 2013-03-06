@@ -393,9 +393,37 @@ function property_listing_register() {
 // Register Taxonomies - Status, Type
 ################################################################################
 
-
+	if (!taxonomy_exists('property-status')) {
  	register_taxonomy("property-status", array("properties"), array("hierarchical" => true,  'show_admin_column' => true,  "label" => "Property Status", "rewrite" => array('slug' => '/properties/property-status', 'with_front' => false)));
+ 	
+ 	wp_insert_term('For Sale', 'property-status', array( 'description'=> 'Property for Sale.' ));
+ 	wp_insert_term('For Rent', 'property-status', array( 'description'=> 'Property for Rent.' ));
+ 	wp_insert_term('Sold', 'property-status', array( 'description'=> 'Property that has been Sold.' ));
+ 	
+ 	}
+ 	
+
+	if (!taxonomy_exists('property-type')) {
  	register_taxonomy("property-type", array("properties"), array("hierarchical" => true, 'show_admin_column' => true,  "label" => "Property Type", "rewrite" => array('slug' => '/properties/property-type', 'with_front' => false)));
+ 	
+ 		// Add Default Property Types
+ 		wp_insert_term('Single-Family Home', 'property-type',  array( 'description'=> 'A home for a single family.' ));
+		wp_insert_term('Condo', 'property-type', array( 'description'=> 'A condo.' ));
+		wp_insert_term('Townhouse', 'property-type', array( 'description'=> 'A townhouse.' ));
+		wp_insert_term('Apartment', 'property-type', array( 'description'=> 'A apartment.' ));
+		wp_insert_term('Loft', 'property-type', array( 'description'=> 'A loft.' ));
+		wp_insert_term('Multi-Family Home', 'property-type', array( 'description'=> 'A home for multi-families.' ));
+		wp_insert_term('Lot/Land', 'property-type', array( 'description'=> 'Land', 'slug' => 'lot-land' ));
+		wp_insert_term('Farm/Ranch', 'property-type', array( 'description'=> 'Farm/Ranch', 'slug' => 'farm-ranch' ));
+		wp_insert_term('Mobile/Manufactured', 'property-type', array( 'description'=> 'A mobile or manufactured home.', 'slug' => 'mobile-manufactured' ));
+	}
+
+
+
+
+
+
+
 
 	register_post_type( 'properties' , $args );
 }
