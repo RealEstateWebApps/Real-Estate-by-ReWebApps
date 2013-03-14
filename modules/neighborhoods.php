@@ -117,9 +117,15 @@ function mytheme_show_box() {
                     get_ngg_gallerydropdown($meta);
               
                 echo '</select>';
+                echo '&emsp; <a href="'. home_url() .'/wp-admin/admin.php?page=nggallery-manage-gallery&mode=edit&gid=' . $meta . '">Edit Gallery</a>';
+                echo '<tr><td colspan="2"><strong>Note:</strong>&emsp; You must first choose a gallery, then save or update the Neighborhood before using the "Edit Gallery" link.</td></tr>';
                 break;
                 
         }
+        
+
+        
+        
         echo     '<td>',
             '</tr>';
     }
