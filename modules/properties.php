@@ -229,10 +229,13 @@ function prop_show_box() {
 		// get current post meta data
 		$prop_meta = get_post_meta($post->ID, $field['id'], true);
 		
-		
+
 		switch ($field['type']) {
+		
 			case 'gal_select':
-				echo '<tr><td colspan="2"><h4>Property Gallery (Requires NextGen-Gallery Plugin)</h4></td></tr>';
+			
+					   If (is_plugin_active('nextgen-gallery/nggallery.php')) {
+     	echo '<tr><td colspan="2"><h4>Property Gallery (Requires NextGen-Gallery Plugin)</h4></td></tr>';
 				echo '<tr>',
 				'<th style="width:15%"><label for="', $field['id'], '">', $field['name'], '</label></th>',
 				'<td>';
@@ -245,7 +248,9 @@ function prop_show_box() {
 				echo     '</td>','</tr>';
 				echo '<tr><td colspan="2"><strong>Note:</strong>&emsp; You must first choose a gallery, then save or update the property before using the "Edit Gallery" link.</td></tr>';
 				echo '<tr><td colspan="2"><hr style="background:#ddd; border:0px; height:1px; position:relative; width:100%;" /><h4>Property Price Information</h4></td></tr>';
-			break;
+
+   }
+						break;
 			case 'price':
 				echo '<tr>',
 				'<th style="width:15%"><label for="', $field['id'], '">', $field['name'], '</label></th>',
