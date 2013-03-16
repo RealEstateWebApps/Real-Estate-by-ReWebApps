@@ -209,7 +209,7 @@ function neighborhood_register() {
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => null,
-		'supports' => array('title','editor','thumbnail', 'author', 'tags'),
+		'supports' => array('title','editor','thumbnail', 'tags'),
 		'has_archive' => true
 	  ); 
 	  

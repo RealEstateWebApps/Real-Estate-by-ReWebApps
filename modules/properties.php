@@ -390,7 +390,7 @@ function property_listing_register() {
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => null,
-		'supports' => array('title','editor','thumbnail', 'author'),
+		'supports' => array('title','editor','thumbnail'),
 		'has_archive' => true
 	  ); 
 	  
