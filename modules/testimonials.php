@@ -46,7 +46,7 @@ function testimonials_add_box() {
 }
 /* gets the property agents dropdown */
 function get_testimonials_agent_dropdown() {
-	$testimonials_agent_loop = new WP_Query( array( 'post_type' => 'agents') );
+	$testimonials_agent_loop = new WP_Query( array( 'post_type' => 'agents',  'post_status' => 'publish',  'posts_per_page' => -1, 'caller_get_posts'=> 1) );
 	$current_testimonials_agent = get_post_meta(get_the_ID(), 'dbt_testimonials_agent_select', true);
 	if ( $testimonials_agent_loop->have_posts() ) :
 	while ( $testimonials_agent_loop->have_posts() ) : $testimonials_agent_loop->the_post();
