@@ -13,40 +13,10 @@
   
         
             <div id="leftpanel">
-<?php 
-$url = $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-$lastPart = parse_url($url); $lastPart = $lastPart[path]; $lastPart = explode("/", $lastPart); $taxonomyname = $lastPart[3];
-$args['tax_query'][] = array(
-    'taxonomy' => 'property-type',
-    'terms' => $taxonomyname,
-    'field' => 'slug',
-    'operator' => 'IN'
-    
-);
-if ($taxonomyname == "residential") : 
-$args['tax_query'][] = array(
-    'taxonomy' => 'property-status',
-    'terms' => array('under-contract', 'withdrawn', 'in-escrow', 'pending', 'for-rent', 'for-lease'),
-    'field' => 'slug',
-    'operator' => 'NOT IN'
-);
-endif; 
-$args['post_type'] = "properties";
-$args['tax_query'][] = array(
-    'taxonomy' => 'property-status',
-    'terms' => array('sold'),
-    'field' => 'slug',
-    'operator' => 'NOT IN'
-);
-$args['orderby'] = "meta_value_num"; $args['meta_key'] = "dbt_list_price";
-$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-$args['paged'] = $paged;
-query_posts($args);
-
-if (have_posts()) : ?>
+		
 		<h1 class="pagetitle"><?php $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ); echo $term->name; ?></h1>
  	
-
+		<?php  if ( have_posts() ) : while (have_posts()) : the_post(); ?>
 
 		<?php while (have_posts()) : the_post(); ?>
 		
