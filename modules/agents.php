@@ -35,7 +35,7 @@ function agents_listing_register() {
 		'menu_position' => null,
 		'supports' => array('title','editor','thumbnail'),
 		'has_archive' => true
-	  ); 
+	  );
  	register_post_type( 'agents' , $args );
 }
 
@@ -136,8 +136,8 @@ function agent_show_box() {
 	foreach ($agent_meta_box['fields'] as $field) {
 		// get current post meta data
 		$agent_meta = get_post_meta($post->ID, $field['id'], true);
-		
-		
+
+
 		switch ($field['type']) {
 
 			case 'text':
@@ -152,13 +152,13 @@ function agent_show_box() {
 				echo '<input type="text" name="', $field['id'], '" id="', $field['id'], '" value="', $agent_meta ? $agent_meta : $field['std'], '" size="20" style="width:20%; min-width:150px;" />', '<br />', isset($field['desc']);
 				echo     '</td>','</tr>';
 			break;
-			
+
 		}
-	
+
 	}
 	echo '</table>';
 	}
-	
+
 ################################################################################
 // Save MetaBox Data
 ################################################################################
@@ -167,7 +167,7 @@ add_action('save_post', 'agent_save_data');
 function agent_save_data($post_id) {
     global $agent_meta_box;
     // verify nonce
-    if (!wp_verify_nonce( isset($_POST['agent_meta_box_nonce']), basename(__FILE__))) {
+    if (!wp_verify_nonce( $_POST['agent_meta_box_nonce'], basename(__FILE__))) {
         return $post_id;
     }
     // check autosave
@@ -199,8 +199,8 @@ function agent_save_data($post_id) {
 function agents_listing_enable_sort() {
     add_submenu_page('edit.php?post_type=agents', 'Sort Agents', 'Sort', 'edit_posts', basename(__FILE__), 'agents_listing_sort');
 }
-add_action('admin_menu' , 'agents_listing_enable_sort'); 
- 
+add_action('admin_menu' , 'agents_listing_enable_sort');
+
 ################################################################################
 // Enable Sort Admin
 ################################################################################
@@ -211,19 +211,19 @@ function agents_listing_sort() {
 	<h3>Sort Agents <img src="<?php bloginfo('url'); ?>/wp-admin/images/loading.gif" id="loading-animation" /></h3>
 	<ul id="agents-list">
 	<?php while ( $agents->have_posts() ) : $agents->the_post(); ?>
-		<li id="<?php the_id(); ?>"><?php the_title(); ?></li>			
+		<li id="<?php the_id(); ?>"><?php the_title(); ?></li>
 	<?php endwhile; ?>
 	</div><!-- End div#wrap //-->
- 
+
 <?php
 }
- 
+
 ################################################################################
 // Load Javascript Files
 ################################################################################
 function agents_listing_print_scripts() {
 	global $pagenow;
- 
+
 	$pages = array('edit.php');
 	if (in_array($pagenow, $pages)) {
 		wp_enqueue_script('jquery-ui-sortable');
@@ -231,13 +231,13 @@ function agents_listing_print_scripts() {
 	}
 }
 add_action( 'admin_print_scripts', 'agents_listing_print_scripts' );
- 
+
 ################################################################################
 // Loading All CSS Stylesheets
 ################################################################################
 function agents_listing_print_styles() {
 	global $pagenow;
- 
+
 	$pages = array('edit.php');
 	if (in_array($pagenow, $pages))
 		wp_enqueue_style('agent_listing_sorting', WP_PLUGIN_URL. '/real-estate-by-rewebapps/css/agentsorting.css');
@@ -249,10 +249,10 @@ add_action( 'admin_print_styles', 'agents_listing_print_styles' );
 ################################################################################
 function agents_listing_save_order() {
 	global $wpdb; // WordPress database class
- 
+
 	$order = explode(',', $_POST['order']);
 	$counter = 0;
- 
+
 	foreach ($order as $agents_id) {
 		$wpdb->update($wpdb->posts, array( 'menu_order' => $counter ), array( 'ID' => $agents_id) );
 		$counter++;
@@ -268,7 +268,7 @@ function the_agent_position() {
 	$get_agent_position = get_post_meta(get_the_ID(), 'dbta_agent_position', true);
 	$the_agent_position = $get_agent_position;
 	if ($the_agent_position == '') { } else {
-		if (is_singular()) { 
+		if (is_singular()) {
 			echo '<li class="agent-position"><h3>',$the_agent_position,'</h3></li>';
 		} else {
 			echo $the_agent_position;
@@ -278,63 +278,63 @@ function the_agent_position() {
 function the_agent_email() {
 	$get_agent_email = get_post_meta(get_the_ID(), 'dbta_agent_email', true);
 	$the_agent_email = $get_agent_email;
-	if ($the_agent_email == '') { } else { 
+	if ($the_agent_email == '') { } else {
 		echo '<li class="agent-email"><a href="mailto:',$the_agent_email,'">Email Me</a></li>';
 	 }
 }
 function the_agent_office_number() {
 	$get_agent_office_number = get_post_meta(get_the_ID(), 'dbta_agent_office_number', true);
 	$the_agent_office_number = $get_agent_office_number;
-	if ($the_agent_office_number == '') { } else { 
+	if ($the_agent_office_number == '') { } else {
 		echo '<li class="agent-office-number"><strong>O: </strong>',$the_agent_office_number,'</li>';
 	 }
 }
 function the_agent_mobile_number() {
 	$get_agent_mobile_number = get_post_meta(get_the_ID(), 'dbta_agent_mobile_number', true);
 	$the_agent_mobile_number = $get_agent_mobile_number;
-	if ($the_agent_mobile_number == '') { } else { 
+	if ($the_agent_mobile_number == '') { } else {
 		echo '<li class="agent-mobile-number"><strong>M: </strong>',$the_agent_mobile_number,'</li>';
 	 }
 }
 function the_agent_fax_number() {
 	$get_agent_fax_number = get_post_meta(get_the_ID(), 'dbta_agent_fax_number', true);
 	$the_agent_fax_number = $get_agent_fax_number;
-	if ($the_agent_fax_number == '') { } else { 
+	if ($the_agent_fax_number == '') { } else {
 		echo '<li class="agent-fax"><strong>F: </strong>',$the_agent_fax_number,'</li>';
 	 }
 }
 function the_agent_website() {
 	$get_agent_website = get_post_meta(get_the_ID(), 'dbta_agent_website', true);
 	$the_agent_website = $get_agent_website;
-	if ($the_agent_website == '') { } else { 
+	if ($the_agent_website == '') { } else {
 		echo '<li class="agent-website"><a href="',$the_agent_website,'" target="_blank">View Website</a></li>';
 	 }
 }
 function the_agent_facebook() {
 	$get_agent_facebook = get_post_meta(get_the_ID(), 'dbta_agent_facebook', true);
 	$the_agent_facebook = $get_agent_facebook;
-	if ($the_agent_facebook == '') { } else { 
+	if ($the_agent_facebook == '') { } else {
 		echo '<li class="agent-facebook"><a href="',$the_agent_facebook,'" target="_blank">Like Me</a></li>';
 	 }
 }
 function the_agent_twitter() {
 	$get_agent_twitter = get_post_meta(get_the_ID(), 'dbta_agent_twitter', true);
 	$the_agent_twitter = $get_agent_twitter;
-	if ($the_agent_twitter == '') { } else { 
+	if ($the_agent_twitter == '') { } else {
 		echo '<li class="agent-twitter"><a href="',$the_agent_twitter,'" target="_blank">Follow Me</a></li>';
 	 }
 }
 function the_agent_linkedin() {
 	$get_agent_linkedin = get_post_meta(get_the_ID(), 'dbta_agent_linkedin', true);
 	$the_agent_linkedin = $get_agent_linkedin;
-	if ($the_agent_linkedin == '') { } else { 
+	if ($the_agent_linkedin == '') { } else {
 		echo '<li class="agent-linkedin"><a href="',$the_agent_linkedin,'" target="_blank">Recommend Me</a></li>';
 	 }
 }
 function the_agent_youtube() {
 	$get_agent_youtube = get_post_meta(get_the_ID(), 'dbta_agent_youtube', true);
 	$the_agent_youtube = $get_agent_youtube;
-	if ($the_agent_youtube == '') { } else { 
+	if ($the_agent_youtube == '') { } else {
 		echo '<li class="agent-youtube"><a href="',$the_agent_youtube,'" target="_blank">Watch my Videos</a></li>';
 	 }
 }
@@ -354,31 +354,11 @@ function the_agent_properties() {
 		)
 	);
 	$agent_prop_query = new WP_Query( $args );
-	if ($agent_prop_query->have_posts()) : 
+	if ($agent_prop_query->have_posts()) :
 	echo '<li class="view-properties"><a href="'.home_url().'/properties/?agent='.get_the_title().'">View Properties</a></li>';
     endif;
 }
 
-################################################################################
-// Setup Agent Testimonials
-################################################################################
-function the_agent_testimonials() {
-	$args = array(
-		'post_type' => 'testimonials',
-		'showposts' => 10,
-		'meta_query' => array(
-			array(
-				'key' => 'dbt_testimonials_agent_select',
-				'value' => get_the_title(),
-				'compare' => 'LIKE'
-			)
-		)
-	);
-	$agent_testimonial_query = new WP_Query( $args );
-	if ($agent_testimonial_query->have_posts()) : 
-	echo '<li class="view-testimonials"><a href="'.home_url().'/testimonials/?agent='.get_the_title().'">View Testimonials</a></li>';
-    endif;
-}
 
 ################################################################################
 // Setup Pagination
@@ -426,7 +406,7 @@ function remove_agent_row_actions( $actions, $post )
 ################################################################################
 add_action("manage_posts_custom_column",  "agents_custom_columns");
 add_filter("manage_edit-agents_columns", "agents_edit_columns");
- 
+
 function agents_edit_columns($columns){
   $columns = array(
     "cb" => "<input type=\"checkbox\" />",
@@ -435,12 +415,12 @@ function agents_edit_columns($columns){
     "email" => "Email Address",
     "date" => "Date",
   );
- 
+
   return $columns;
 }
 function agents_custom_columns($column){
   global $post;
- 
+
   switch ($column) {
   case "position":
         $custom = get_post_custom();
@@ -472,7 +452,7 @@ function include_agents_template( $template_path ) {
                 $template_path = plugin_dir_path( __FILE__ ) . '../templates/single-agents.php';
             }
         }
-        
+
         // Archive Template
         if ( is_archive() ) {
             // checks if the file exists in the theme first,
@@ -483,8 +463,8 @@ function include_agents_template( $template_path ) {
                 $template_path = plugin_dir_path( __FILE__ ) . '../templates/archive-agents.php';
             }
         }
-    
-        
+
+
     }
     return $template_path;
 }

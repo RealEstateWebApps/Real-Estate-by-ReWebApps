@@ -1,80 +1,67 @@
 <?php get_header(); ?>
 
-<div class="container">
-<div class="page-wrapper">
 
-<div class="row">
 
-<div class="span3">
-		<?php get_sidebar(); ?>
-  </div><!-- end span4 -->
 
-  <div class="span9">
-  
-        
-            <div id="leftpanel">
-		
-		<h1 class="pagetitle"><?php $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ); echo $term->name; ?></h1>
- 	
-		<?php  if ( have_posts() ) : while (have_posts()) : the_post(); ?>
 
-		<?php while (have_posts()) : the_post(); ?>
-		
-	
-		<div class="property">
-			<div class="prop-thumb">
-				<a href="<?php the_permalink() ?>" rel="bookmark" title="More about <?php the_title(); ?>">
-				<?php if ( has_post_thumbnail()) : ?>
-					<?php the_post_thumbnail('listing-thumb'); ?>
-				<?php else : ?>
-					<img src="<?php bloginfo('stylesheet_directory'); ?>/images/no-image.jpg" width="400" height="260" alt="<?php the_title(); ?>" />
-				<?php endif; ?>		
-				</a>
-			</div>
-			<div class="prop-desc">
+
+
+
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+
+	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+
+					<h1 class="pagetitle"><?php $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ); echo $term->name; ?></h1>
+
+				<br />
+
+				<h3><?php the_prop_address(); ?></h3>
+				<?php the_prop_city(); ?>, <?php the_prop_state(); ?> <?php the_prop_zip(); ?><br />
+
+
+
+			<?php the_prop_gallery(); ?>
+
+
 				<ul>
-		      	  	<li><h3><a href="<?php the_permalink() ?>" rel="bookmark" title="More about <?php the_title(); ?>"><?php the_title(); ?></a></h3></li>
-		      	  	<li><?php the_prop_address(); ?></li>
-					<li><?php the_prop_city(); ?>, <?php the_prop_state(); ?> <?php the_prop_zip(); ?></li>
-		      	  	<li class="property-status"><strong>Property Status</strong>: <?php echo get_the_term_list( get_the_ID(), 'property-status', ' ', ', ', '' ); ?></li>
-					<li><strong>Property Type</strong>: <?php echo get_the_term_list( get_the_ID(), 'property-type', '', ', ', '' ); ?></li>
+					<li class="pdb-item-title">Property Status</li><li class="pdb-item"><?php echo get_the_term_list( get_the_ID(), 'property-status', ' ', ', ', '' ); ?></li>
+					<li class="pdb-item-title">Property Type</li><li class="pdb-item"><?php echo get_the_term_list( get_the_ID(), 'property-type', '', ', ', '' ); ?></li>
+					<?php the_prop_neighborhood(); ?>
 					<?php the_list_price(); ?>
+					<?php the_list_date(); ?>
+					<?php the_sold_price(); ?>
+					<?php the_sold_date(); ?>
+					<?php the_mls_id(); ?>
 					<?php the_prop_bed(); ?>
 					<?php the_prop_bath(); ?>
+					<?php the_prop_half_bath(); ?>
+					<?php the_prop_garage(); ?>
+					<?php the_prop_living_space(); ?>
+					<?php the_prop_land_size(); ?>
+					<?php the_prop_agent(); ?>
+					<li class="clear"></li>
 				</ul>
-			</div>
-			<div class="prop-read-more"><a href="<?php the_permalink(); ?>">View Property Details</a></div>
-			<div class="clear"></div>
-	    </div>
-		<?php endwhile; ?>
+				<?php the_prop_virtual_tour(); ?>
 
-		<?php paginate(); ?>
-	<?php else :
 
-		if ( is_category() ) { // If this is a category archive
-			printf("<h2 class='center'>".__("Sorry, but there aren't any posts in the %s category yet.", 'kubrick').'</h2>', single_cat_title('',false));
-		} else if ( is_date() ) { // If this is a date archive
-			echo('<h2>'.__("Sorry, but there aren't any posts with this date.", 'kubrick').'</h2>');
-		} else if ( is_author() ) { // If this is a category archive
-			$userdata = get_userdatabylogin(get_query_var('author_name'));
-			printf("<h2 class='center'>".__("Sorry, but there aren't any posts by %s yet.", 'kubrick')."</h2>", $userdata->display_name);
-		} else {
-			echo("<h2 class='center'>".__('No posts found.', 'kubrick').'</h2>');
-		}
-	  get_search_form();
-	endif;
-?>
+				<?php the_content(); ?>
+
+				<?php the_property_map(); ?>
+
+
+
+	<?php  endwhile; else: ?>
+
+		<p>Sorry, this property no longer exists.</p>
+
+<?php endif; ?>
+
 	</div>
-  </div><!-- end span8 -->
-  
-  
-  
-  </div>
-</div>
+	</div>
 
-  <div class="row">
-  <div class="page-wrapper-bottom"></div>
-  </div>
 
-</div>
+
+<?php get_sidebar(); ?>
 <?php get_footer(); ?>

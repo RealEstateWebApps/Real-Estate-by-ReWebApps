@@ -35,7 +35,7 @@ function get_ngg_dropdown($currid = '') {
 		foreach($tables as $table) {
 			echo '<option value="'.$table->gid.'" ';
 			if ($table->gid == $currid) echo "selected='selected' ";
-				echo '>'.$table->name.'</option>'."\n\t"; 
+				echo '>'.$table->name.'</option>'."\n\t";
 		}
 	}
 }
@@ -75,7 +75,7 @@ $meta_box = array(
             'id' => $prefix . 'neigh_zip',
             'type' => 'text',
             'std' => ''
-        )   
+        )
     )
 );
 
@@ -109,13 +109,13 @@ function mytheme_show_box() {
         switch ($field['type']) {
             case 'text':
 				echo '<input type="text" name="', $field['id'], '" id="', $field['id'], '" value="', $meta ? $meta : $field['std'], '" size="20" style="width:20%; min-width:150px;" />', '<br />', isset($field['desc']);
-				
+
 			break;
             case 'select':
              	   If (is_plugin_active('nextgen-gallery/nggallery.php')) {
                 echo '<select name="', $field['id'], '" id="', $field['id'], '">';
-                
-               
+
+
                 echo '<option value="none">No Gallery</option>';
                     get_ngg_gallerydropdown($meta);
                 echo '</select>';
@@ -125,12 +125,12 @@ function mytheme_show_box() {
 	                echo ' Please install and activate the NextGen-Gallery plugin to use this feature.';
                 }
                 break;
-                
-        }
-        
 
-        
-        
+        }
+
+
+
+
         echo     '<td>',
             '</tr>';
     }
@@ -147,7 +147,7 @@ function mytheme_save_data($post_id) {
     global $meta_box;
 
     // verify nonce
-    if (!wp_verify_nonce( isset($_POST['mytheme_meta_box_nonce']), basename(__FILE__))) {
+    if (!wp_verify_nonce( $_POST['mytheme_meta_box_nonce'], basename(__FILE__))) {
         return $post_id;
     }
 
@@ -181,9 +181,9 @@ function mytheme_save_data($post_id) {
 // Register Neighborhoods Custom Post Type
 ################################################################################
 add_action('init', 'neighborhood_register');
- 
+
 function neighborhood_register() {
- 
+
 	$labels = array(
 		'name' => _x('Neighborhoods', 'post type general name'),
 		'singular_name' => _x('Neighborhood', 'post type singular name'),
@@ -197,7 +197,7 @@ function neighborhood_register() {
 		'not_found_in_trash' => __('Nothing found in Trash'),
 		'parent_item_colon' => ''
 	);
- 
+
 	$args = array(
 		'labels' => $labels,
 		'public' => true,
@@ -211,17 +211,17 @@ function neighborhood_register() {
 		'menu_position' => null,
 		'supports' => array('title','editor','thumbnail', 'tags'),
 		'has_archive' => true
-	  ); 
-	  
+	  );
+
 ################################################################################
 // Neighborhood Category - Taxonomy
 ################################################################################
- 	register_taxonomy("neighborhood-category", array("neighborhoods"), array("hierarchical" => true, 'show_admin_column' => true, "label" => "Neighborhood Category", "rewrite" => array('slug' => 'neighborhood-category'), "query_var" => true));
+ 	register_taxonomy("neighborhood-category", array("neighborhoods"), array("hierarchical" => true, 'show_admin_column' => true, "label" => "Neighborhood Category", "rewrite" => array('slug' => 'neighborhood-category', 'with_front' => false), "query_var" => true));
 	register_post_type( 'neighborhoods' , $args );
-	
-}    
 
-### CUSTOM FIELDS FOR res-category  
+}
+
+### CUSTOM FIELDS FOR res-category
 //add extra fields to category edit form hook
 ################################################################################
 // Load Javascript
@@ -232,14 +232,14 @@ wp_enqueue_script('thickbox');
 wp_register_script('rewa-neighborhoods', WP_PLUGIN_URL.'/real-estate-by-rewebapps/js/neighborhoods.min.js', array('jquery','media-upload','thickbox'));
 wp_enqueue_script('rewa-neighborhoods');
 }
- 
+
 ################################################################################
 // Load CSS Stylesheets
 ################################################################################
 function neighborhood_admin_styles() {
 wp_enqueue_style('thickbox');
 }
- 
+
 ################################################################################
 // Neighborhood Category - Taxonomy
 ################################################################################
@@ -295,7 +295,7 @@ function rewa_cpt_neighborhood_custom_column($column_name, $post_id) {
     $taxonomy = $column_name;
     $post_type = get_post_type($post_id);
     $terms = get_the_terms($post_id, $taxonomy);
- 
+
     if ( !empty($terms) ) {
         foreach ( $terms as $term )
             $post_terms[] = "<a href='edit.php?post_type={$post_type}&{$taxonomy}={$term->slug}'> " . esc_html(sanitize_term_field('name', $term->name, $term->term_id, $taxonomy, 'edit')) . "</a>";
@@ -306,7 +306,7 @@ function rewa_cpt_neighborhood_custom_column($column_name, $post_id) {
 
 function the_neigh_gallery() {
 	$neigh_gallery_id = get_post_meta(get_the_ID(), 'dbt_select', true);
-	if ($neigh_gallery_id == 'none') { } else { 
+	if ($neigh_gallery_id == 'none') { } else {
 		echo '<div class="prop-gallery">';
 		echo do_shortcode('[nggallery id='.$neigh_gallery_id.' template=galleryview images=0]');
 		echo '</div>';
@@ -316,21 +316,21 @@ function the_neigh_gallery() {
 function the_neigh_city() {
 	$get_neigh_city = get_post_meta(get_the_ID(), 'dbt_neigh_city', true);
 	$the_neigh_city = $get_neigh_city;
-	if ($the_neigh_city == '') { } else { 
+	if ($the_neigh_city == '') { } else {
 		echo $the_neigh_city;
 	 }
 }
 function the_neigh_state() {
 	$get_neigh_state = get_post_meta(get_the_ID(), 'dbt_neigh_state', true);
 	$the_neigh_state = $get_neigh_state;
-	if ($the_neigh_state == '') { } else { 
+	if ($the_neigh_state == '') { } else {
 		echo $the_neigh_state;
 	 }
 }
 function the_neigh_zip() {
 	$get_neigh_zip = get_post_meta(get_the_ID(), 'dbt_neigh_zip', true);
 	$the_neigh_zip = $get_neigh_zip;
-	if ($the_neigh_zip == '') { } else { 
+	if ($the_neigh_zip == '') { } else {
 		echo $the_neigh_zip;
 	 }
 }
@@ -368,7 +368,7 @@ add_filter( 'template_include', 'include_neighborhoods_template', 1 );
 
 function include_neighborhoods_template( $template_path ) {
     if ( get_post_type() == 'neighborhoods' ) {
-    	// Single Property Template
+    	// Single Neighborhood Template
         if ( is_single() ) {
             // checks if the file exists in the theme first,
             // otherwise serve the file from the plugin
@@ -378,7 +378,7 @@ function include_neighborhoods_template( $template_path ) {
                 $template_path = plugin_dir_path( __FILE__ ) . '../templates/single-neighborhoods.php';
             }
         }
-        
+
         // Archive Template
         if ( is_archive() ) {
             // checks if the file exists in the theme first,
@@ -389,8 +389,18 @@ function include_neighborhoods_template( $template_path ) {
                 $template_path = plugin_dir_path( __FILE__ ) . '../templates/archive-neighborhoods.php';
             }
         }
-    
-        
+
+        // Neighborhood Taxonomy Archive Template
+		if ( is_tax('property-type')) {
+            if ( $theme_file = locate_template( array ( 'taxonomy-neighborhood-category.php' ) ) ) {
+                $template_path = $theme_file;
+            } else {
+                $template_path = plugin_dir_path( __FILE__ ) . '../templates/taxonomy-neighborhood-category.php';
+            }
+		}
+
+
+
     }
     return $template_path;
 }

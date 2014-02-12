@@ -5,15 +5,13 @@
 		<div id="content" role="main">
 
   <h1 class="pagetitle"><?php post_type_archive_title() ?></h1>
- 
-
-<?php $args = array( 'post_type' => 'properties', 'posts_per_page' => 10 ); $loop = new WP_Query( $args );
-while ( $loop->have_posts() ) : $loop->the_post();  ?>
 
 
+		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-<a href="<?php the_permalink() ?>"><h2><?php the_title(); ?></h2></a><br />
-<?php the_prop_address(); ?> <?php the_prop_city(); ?>, <?php the_prop_state(); ?> <?php the_prop_zip(); ?>
+
+		<a href="<?php the_permalink() ?>"><h2><?php the_title(); ?></h2></a><br />
+		<?php the_prop_address(); ?> <?php the_prop_city(); ?>, <?php the_prop_state(); ?> <?php the_prop_zip(); ?>
 
 
 
@@ -21,7 +19,7 @@ while ( $loop->have_posts() ) : $loop->the_post();  ?>
 	<a href="<?php the_permalink() ?>"><?php the_post_thumbnail(); ?></a>
 <?php else : ?>
 	<a href="<?php the_permalink() ?>"><img src="http://placehold.it/400x260&text=No+Photo+Available" width="400" height="260" alt="<?php the_title(); ?>" /></a>
-<?php endif; ?>		
+<?php endif; ?>
 
 
 
@@ -32,16 +30,16 @@ while ( $loop->have_posts() ) : $loop->the_post();  ?>
 			<li class="property-status"><strong>Property Status</strong>: <?php echo get_the_term_list( get_the_ID(), 'property-status', ' ', ', ', '' ); ?></li>
 			<li><strong>Property Type</strong>: <?php echo get_the_term_list( get_the_ID(), 'property-type', '', ', ', '' ); ?></li>
 		</ul>
-		
-		
 
-<?php 	the_excerpt(); ?>
+
+
+<?php the_excerpt(); ?>
 
 <hr>
 
-<?php endwhile; ?>
-			
-			
+<?php endwhile; endif; ?>
+
+
 		</div>
 	</div>
 

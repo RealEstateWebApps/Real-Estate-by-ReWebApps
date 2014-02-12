@@ -3,7 +3,7 @@
 Plugin Name: Real Estate by ReWebApps
 Plugin URI: http://www.realestatewebapps.com
 Description: A custom Real Estate plugin that offers properties, neighborhoods, agents, and testimonials. Requires the NextGen-Gallery plugin for property images.
-Version: 1.4.5
+Version: 1.5.6
 Author: ReWebApps
 Author URI: http://www.realestatewebapps.com
 License: GPL3
@@ -18,71 +18,95 @@ require_once('modules/neighborhoods.php');
 // Load Agents Module
 require_once('modules/agents.php');
 
-// Load Testimonials Module
-require_once('modules/testimonials.php');
+// Load Presstrends
+require_once('modules/presstrends.php');
+
+
+################################################################################
+// Plugin Discontinued Notice
+################################################################################
+function rewebapp_notice_properties() {
+	echo '<div class="updated" style="padding:10px !important;"><strong>NOTICE:</strong> The <strong>Real Estate by ReWebApps</strong> plugin is no longer being supported. The plugin is currently used to display your <strong>Properties/Neighborhoods/Agents/Testimonials</strong>. Please start migrating to an IDX service or another WordPress Plugin solution. Please contact your <strong>Designer and/or Developer</strong> if you have any questions. Any galleries created with <strong>NextGen-Gallery Plugin</strong> will NOT be removed when the plugin is uninstalled. We recommend you first backup your data please use the <a href="/wp-admin/export.php">WordPress Export Tool</a>.</div>';
+}
+
+add_action('wp_dashboard_setup', 'rewebapp_notice_properties');
+add_filter( 'views_edit-properties', 'rewebapp_notice_properties' );
+add_filter( 'views_edit-neighborhoods', 'rewebapp_notice_properties' );
+add_filter( 'views_edit-agents', 'rewebapp_notice_properties' );
+add_filter( 'views_edit-testimonials', 'rewebapp_notice_properties' );
 
 
 
-/**
-* PressTrends Plugin API
-*/
-	function presstrends_realestate_by_imforza_plugin() {
+################################################################################
+// Uninstall
+################################################################################
+register_uninstall_hook( __FILE__, 'rewebapps_uninstall');
 
-		// PressTrends Account API Key
-		$api_key = 'l325qf6uap6dnjrrutams299ajr5zsts8wgr';
-		$auth    = 'j6fse861ja7tppi31pp9cnuq71jucy0z4';
+function rewebapps_uninstall(){
+    global $wpdb;
+    $table = $wpdb->prefix."posts";
+    $wpdb->query("DELETE FROM $table WHERE post_type='properties'");
+    $wpdb->query("DELETE FROM $table WHERE post_type='neighborhoods'");
+    $wpdb->query("DELETE FROM $table WHERE post_type='agents'");
+    $wpdb->query("DELETE FROM $table WHERE post_type='testimonials'");
 
-		// Start of Metrics
-		global $wpdb;
-		$data = get_transient( 'presstrends_cache_data' );
-		if ( !$data || $data == '' ) {
-			$api_base = 'http://api.presstrends.io/index.php/api/pluginsites/update/auth/';
-			$url      = $api_base . $auth . '/api/' . $api_key . '/';
+    $table = $wpdb->prefix."postmeta";
+    // Properties
+    $wpdb->query("DELETE FROM $table WHERE meta_key='dbt_neighborhood_select'");
+    $wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_agent_select'");
+    $wpdb->query("DELETE FROM $table WHERE meta_key='dbt_select'"); // ngg-gallery
+    $wpdb->query("DELETE FROM $table WHERE meta_key='dbt_list_price'");
+    $wpdb->query("DELETE FROM $table WHERE meta_key='dbt_list_date'");
+    $wpdb->query("DELETE FROM $table WHERE meta_key='dbt_sold_price'");
+    $wpdb->query("DELETE FROM $table WHERE meta_key='dbt_sold_date'");
+    $wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_address'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_city'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_state'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_zip'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_mls_id'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_bed'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_bath'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_half_bath'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_garage'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_living_space'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_land_size'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_virtual_tour'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_use_latlong'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_latitude'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_longitude'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_country'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_prop_size_metric'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_weekly_rental_high_season'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_weekly_rental_low_season'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_monthly_rental_high_season'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_monthly_rental_low_season'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_hide_price'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_list_currency'");
 
-			$count_posts    = wp_count_posts();
-			$count_pages    = wp_count_posts( 'page' );
-			$comments_count = wp_count_comments();
 
-			// wp_get_theme was introduced in 3.4, for compatibility with older versions, let's do a workaround for now.
-			if ( function_exists( 'wp_get_theme' ) ) {
-				$theme_data = wp_get_theme();
-				$theme_name = urlencode( $theme_data->Name );
-			} else {
-				$theme_data = get_theme_data( get_stylesheet_directory() . '/style.css' );
-				$theme_name = $theme_data['Name'];
-			}
+	// Neighborhods
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_neigh_city'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_neigh_state'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_neigh_zip'");
 
-			$plugin_name = '&';
-			foreach ( get_plugins() as $plugin_info ) {
-				$plugin_name .= $plugin_info['Name'] . '&';
-			}
-			// CHANGE __FILE__ PATH IF LOCATED OUTSIDE MAIN PLUGIN FILE
-			$plugin_data         = get_plugin_data( __FILE__ );
-			$posts_with_comments = $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->posts WHERE post_type='post' AND comment_count > 0" );
-			$data                = array(
-				'url'             => stripslashes( str_replace( array( 'http://', '/', ':' ), '', site_url() ) ),
-				'posts'           => $count_posts->publish,
-				'pages'           => $count_pages->publish,
-				'comments'        => $comments_count->total_comments,
-				'approved'        => $comments_count->approved,
-				'spam'            => $comments_count->spam,
-				'pingbacks'       => $wpdb->get_var( "SELECT COUNT(comment_ID) FROM $wpdb->comments WHERE comment_type = 'pingback'" ),
-				'post_conversion' => ( $count_posts->publish > 0 && $posts_with_comments > 0 ) ? number_format( ( $posts_with_comments / $count_posts->publish ) * 100, 0, '.', '' ) : 0,
-				'theme_version'   => $plugin_data['Version'],
-				'theme_name'      => $theme_name,
-				'site_name'       => str_replace( ' ', '', get_bloginfo( 'name' ) ),
-				'plugins'         => count( get_option( 'active_plugins' ) ),
-				'plugin'          => urlencode( $plugin_name ),
-				'wpversion'       => get_bloginfo( 'version' ),
-			);
+	// Agents
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbta_agent_position'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbta_agent_email'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbta_agent_office_number'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbta_agent_mobile_number'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbta_agent_fax_number'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbta_agent_website'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbta_agent_facebook'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbta_agent_twitter'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbta_agent_linkedin'");
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbta_agent_youtube'");
 
-			foreach ( $data as $k => $v ) {
-				$url .= $k . '/' . $v . '/';
-			}
-			wp_remote_get( $url );
-			set_transient( 'presstrends_cache_data', $data, 60 * 60 * 24 );
-		}
-	}
+	// Testimonials
+	$wpdb->query("DELETE FROM $table WHERE meta_key='dbt_testimonials_agent_select'");
 
-// PressTrends WordPress Action
-add_action('admin_init', 'presstrends_realestate_by_imforza_plugin');
+	$table = $wpdb->prefix."term_taxonomy";
+	$wpdb->query("DELETE FROM $table WHERE taxonomy='property-status'");
+	$wpdb->query("DELETE FROM $table WHERE taxonomy='property-type'");
+	$wpdb->query("DELETE FROM $table WHERE taxonomy='neighborhood-category'");
+}
+

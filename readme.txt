@@ -3,18 +3,18 @@ Author: ReWebApps
 Author URL: http://www.realestatewebapps.com/
 Contributors: Andrew Bowen, Brandon Hubbard
 Donate link: http://www.realestatewebapps.com/
-Tested up to: 3.5.1
-Stable tag: 1.4.5
+Tested up to: 3.7.1
+Stable tag: 1.5.6
 Tags: real estate, realestate, properties, agents, ReWebApps, Real Estate Web Apps, nextgen-gallery, nextgen gallery, real estate wordpress
 License: GPLv3
 
 == Description ==
 
-<h3>Currently in BETA release</h3>
+<h3>NOTICE: This plugin is no longer being supported.</h3>
 
-The Real Estate by ReWebApps plugin for wordpress gives users the ability to manage Agents, Properties, and Neighborhoods all inside Wordpress. 
+NOTICE: The Real Estate by ReWebApps plugin is no longer being supported. The plugin is currently used to display your Properties/Neighborhoods/Agents/Testimonials. Please start migrating to an IDX service or another WordPress Plugin solution. Please contact your Designer and/or Developer if you have any questions. Any galleries created with NextGen-Gallery Plugin will NOT be removed when the plugin is uninstalled. We recommend you first backup your data please use the WordPress Export Tool before un-installing the plugin.
 
-Note: Currently this plugin is in beta, in order to use you would need to create template files within your theme. 
+The Real Estate by ReWebApps plugin for wordpress gives users the ability to manage Agents, Properties, and Neighborhoods all inside Wordpress.
 
 
 == Credits ==
@@ -32,11 +32,58 @@ Brandon Hubbard - @bhubbard
 1. Add Property Galleries via the NextGen Gallery plugin, and then edit your property to choose the appropriate gallery.
 1. Modify your theme to display properties, templates coming soon.
 
-= Advanced Usage: =
-
-1. Details Coming Soon
 
 == Changelog ==
+
+= 1.5.6 =
+* Dropdown to choose metric type (acres, sqft, etc)
+* Dropdown to choose currency for prices
+* Support for Weekly and Monthly Rental Prices (high and low season)
+* Hide/Show Price Option
+
+= 1.5.5 =
+* Removed Testimonials
+* Removed Map Popup Error when no geocode is found on property maps
+* Fixed Pricing Format PHP Notice on List Price for Properties
+* Cleaned up templates a bit to use regular WordPress loop, still needs work
+
+= 1.5.4 =
+* Switched to is_tax for Taxonomy Template checks
+
+= 1.5.3 =
+* Fixed bug related to template files for Property-Status & Property Type
+* Removed resource template file as we no longer have resources
+
+= 1.5.2 =
+
+* Add support for sort order on properties
+
+= 1.5.1 =
+
+* Better Formatting for Prices
+
+= 1.5.0 =
+
+* Improved support for Latitude & Longitude for property maps
+
+= 1.4.9 =
+
+* Property prices now only allow numbers
+
+= 1.4.8 =
+
+* Added Latitude & Longitude to Properties
+* Added Country to Properties
+
+= 1.4.7 =
+
+* Moved Presstrends Code to under modules
+* Added a notice regarding Support & Future of the plugin
+* Created an Uninstaller to cleanup database on uninstall
+
+= 1.4.6 =
+
+* Fixed bug for custom meta fields not saving in WordPress 3.5.2
 
 = 1.4.5 =
 

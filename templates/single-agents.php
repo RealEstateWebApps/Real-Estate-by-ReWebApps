@@ -14,7 +14,7 @@
 						<img src="http://placehold.it/200x240&text=No+Photo+Available" width="200" height="240" alt="<?php the_title(); ?>" />
 					<?php endif; ?>
 				</div>
-				
+
 					<div class="agent-details">
 					<ul>
 						<?php the_agent_position(); ?>
@@ -24,7 +24,7 @@
 						<li class="spacer"></li>
 						<?php the_agent_email(); ?>
 						<?php the_agent_website(); ?>
-						<?php the_agent_testimonials(); ?>
+
 						<li class="spacer"></li>
 						<li>
 							<ul class="agent-social">
@@ -37,15 +37,15 @@
 						<li class="clear"></li>
 					</ul>
 				</div>
-			
-				
+
+
 				<?php the_content(); ?>
 			<?php endwhile; else: ?>
-				
+
 				<p>Sorry, This agent appears to no longer exist.</p>
-			
+
 			<?php endif; ?>
-			
+
 
 
 			</div>

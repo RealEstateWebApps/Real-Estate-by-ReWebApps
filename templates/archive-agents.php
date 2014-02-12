@@ -5,14 +5,10 @@
 
 
 			<h1 class="pagetitle"><?php post_type_archive_title() ?></h1>
-       
-				<?php $posts=query_posts($query_string . '&orderby=menu_order&order=ASC&showposts=-1'); 
-				if (have_posts()) : ?>
-				<?php $post = $posts[0]; // Hack. Set $post so that the_date() works. ?>
-				<?php if (is_post_type_archive()) { ?>
-				
-				<?php } ?>
-				<?php while (have_posts()) : the_post(); ?>
+
+
+
+			<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 				<div class="agents">
 					<div class="agents-thumb">
 						<a href="<?php the_permalink() ?>">
@@ -26,7 +22,7 @@
 					<div class="agents-desc">
 					<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="More about <?php the_title(); ?>"><?php the_title(); ?></a></h3>
 						<ul>
-			
+
 							<li class="agent-position"><?php the_agent_position(); ?></li>
 							<?php the_agent_office_number(); ?>
 							<?php the_agent_mobile_number(); ?>
@@ -36,8 +32,8 @@
 					<div class="clear"></div>
 				</div>
 				<?php endwhile; ?>
-				
-				<?php else : 
+
+				<?php else :
 				echo("<h2 class='center'>".__('No posts found.', 'kubrick').'</h2>');
 				get_search_form();
 				endif;
