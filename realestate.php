@@ -3,7 +3,7 @@
 Plugin Name: Real Estate by ReWebApps
 Plugin URI: http://www.realestatewebapps.com
 Description: A custom Real Estate plugin that offers properties, neighborhoods, agents, and testimonials. Requires the NextGen-Gallery plugin for property images.
-Version: 1.5.6
+Version: 1.6.0
 Author: ReWebApps
 Author URI: http://www.realestatewebapps.com
 License: GPL3
@@ -23,10 +23,26 @@ require_once('modules/presstrends.php');
 
 
 ################################################################################
+// Add Admin Pages
+################################################################################
+add_action( 'admin_menu', 'register_idxbroker_admin_pages' );
+
+function register_idxbroker_admin_pages(){
+
+  // Start Page
+  add_menu_page( 'Real Estate', 'Real Estate', 'manage_options', 'real-estate-by-rewebapps/documentation.php', '', '', 3);
+
+
+}
+
+
+################################################################################
 // Plugin Discontinued Notice
 ################################################################################
 function rewebapp_notice_properties() {
-	echo '<div class="updated" style="padding:10px !important;"><strong>NOTICE:</strong> The <strong>Real Estate by ReWebApps</strong> plugin is no longer being supported. The plugin is currently used to display your <strong>Properties/Neighborhoods/Agents/Testimonials</strong>. Please start migrating to an IDX service or another WordPress Plugin solution. Please contact your <strong>Designer and/or Developer</strong> if you have any questions. Any galleries created with <strong>NextGen-Gallery Plugin</strong> will NOT be removed when the plugin is uninstalled. We recommend you first backup your data please use the <a href="/wp-admin/export.php">WordPress Export Tool</a>.</div>';
+	echo '<div class="error" style="padding:10px !important;"><strong>ACTION REQUIRED:</strong> Please start migrating to an IDX service such as <a href="https://signup.idxbroker.com/d/imforza">IDX Broker Platinum</a> or another solution to manage your properties.</div>
+
+	<div class="updated" style="padding:10px !important;"><strong>NOTICE:</strong> The <strong>Real Estate by ReWebApps</strong> plugin is no longer being supported. The plugin is currently used to display your <strong>Properties/NeighborhoodsAgents</strong>. Please start migrating to an IDX service such as <a href="https://signup.idxbroker.com/d/imforza">IDX Broker Platinum</a> or another solution. Please contact your <strong>Designer and/or Developer</strong> if you have any questions. Any galleries created with <strong>NextGen-Gallery Plugin</strong> will NOT be removed when the plugin is uninstalled. We recommend you first backup your data please use the <a href="/wp-admin/export.php">WordPress Export Tool</a>.</div>';
 }
 
 add_action('wp_dashboard_setup', 'rewebapp_notice_properties');

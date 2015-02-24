@@ -1,24 +1,6 @@
 <?php
 
 
-################################################################################
-// Setup Pagination
-################################################################################
-function paginate() {
-	global $wp_query, $wp_rewrite;
-	$wp_query->query_vars['paged'] > 1 ? $current = $wp_query->query_vars['paged'] : $current = 1;
-	$pagination = array(
-		'base' => @add_query_arg('page','%#%'),
-		'format' => '',
-		'total' => $wp_query->max_num_pages,
-		'current' => $current,
-		'show_all' => true,
-		'type' => 'plain'
-	);
-	if( $wp_rewrite->using_permalinks() ) $pagination['base'] = user_trailingslashit( trailingslashit( remove_query_arg( 's', get_pagenum_link( 1 ) ) ) . 'page/%#%/', 'paged' );
-	if( !empty($wp_query->query_vars['s']) ) $pagination['add_args'] = array( 's' => get_query_var( 's' ) );
-	echo paginate_links( $pagination );
-}
 
 
 ################################################################################
@@ -298,6 +280,10 @@ function prop_show_box() {
     // Use nonce for verification
     echo '<input type="hidden" name="prop_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
 
+    echo '<div class="error" style="padding:10px !important;"><strong>ACTION REQUIRED:</strong> Please start migrating to an IDX service such as <a href="https://signup.idxbroker.com/d/imforza">IDX Broker Platinum</a> or another solution to manage your properties.</div>
+
+    <div class="updated" style="padding:10px !important;"><strong>NOTICE:</strong> The <strong>Real Estate by ReWebApps</strong> plugin is no longer being supported. The plugin is currently used to display your <strong>Properties/Neighborhoods/Agents</strong>. Please start migrating to an IDX service such as <a href="https://signup.idxbroker.com/d/imforza">IDX Broker Platinum</a> or another solution. Please contact your <strong>Designer and/or Developer</strong> if you have any questions. Any galleries created with <strong>NextGen-Gallery Plugin</strong> will NOT be removed when the plugin is uninstalled. We recommend you first backup your data please use the <a href="/wp-admin/export.php">WordPress Export Tool</a>.</div>';
+
     echo '<table class="form-table" style="overflow:hidden;">';
 
 	foreach ($prop_meta_box['fields'] as $field) {
@@ -531,7 +517,7 @@ function property_listing_register() {
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => null,
-		'supports' => array('title','editor','thumbnail', 'page-attributes'),
+		'supports' => array('title','editor','thumbnail', 'page-attributes', 'revisions', 'excerpt', 'publicize', 'wpcom-markdown', 'page-attributes'),
 		'has_archive' => true
 	  );
 
@@ -580,40 +566,22 @@ jQuery(function(){jQuery(".datepicker").datepicker()});
 add_action('admin_footer', 'rewa_property_admin_footer');
 
 
-################################################################################
-// Custom Columns for Properties Post Type
-################################################################################
-add_filter( 'manage_properties_posts_columns', 'rewa_prop_cpt_columns' );
-add_action('manage_properties_posts_custom_column', 'rewa_prop_cpt_custom_column', 10, 2);
-
-function rewa_prop_cpt_columns($defaults) {
-	unset($defaults['author']);
-	$defaults['title'] = 'Property Name';
-    $defaults['date'] = 'Listed';
-    return $defaults;
-}
-function rewa_prop_cpt_custom_column($column_name, $post_id) {
-    $taxonomy = $column_name;
-    $post_type = get_post_type($post_id);
-    $terms = get_the_terms($post_id, $taxonomy);
-
-    if ( !empty($terms) ) {
-        foreach ( $terms as $term )
-            $post_terms[] = "<a href='edit.php?post_type={$post_type}&{$taxonomy}={$term->slug}'> " . esc_html(sanitize_term_field('name', $term->name, $term->term_id, $taxonomy, 'edit')) . "</a>";
-        echo join( ', ', $post_terms );
-    }
-    else echo '<i>No terms.</i>';
-}
 
 
 ################################################################################
 // Property Functions
 ################################################################################
 function the_prop_gallery() {
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+	if (is_plugin_active('nextgen-gallery/nggallery.php')) {
+
 	$prop_gallery_id = get_post_meta(get_the_ID(), 'dbt_select', true);
-	if ($prop_gallery_id == 'none') { } else {
+	if ($prop_gallery_id == 'none' ) { } else {
 
 		echo do_shortcode('<div class="prop-gallery">[nggallery id='.$prop_gallery_id.' template=galleryview images=0]</div>');
+	 } } else {
+		 echo do_shortcode('[gallery]');
 	 }
 }
 function is_decimal( $val ) {
@@ -856,12 +824,6 @@ function the_prop_virtual_tour() {
 		echo '<div class="virtual-tour"><a href="'.$the_prop_virtual_tour.'" target="_blank">Virtual Tour</a></div>';
 	 }
 }
-function properties_posts_per_page($query) {
-    if (isset( $query->query_vars['post_type']) == 'properties' && is_post_type_archive() ) $query->query_vars['posts_per_page'] = 5;
-    return $query;
-}
-if ( !is_admin() ) add_filter( 'pre_get_posts', 'properties_posts_per_page' );
-
 
 function the_prop_latitude() {
 	$the_prop_latitude = get_post_meta(get_the_ID(), 'dbt_latitude', true);
@@ -960,29 +922,6 @@ function remove_prop_row_actions( $actions, $post )
 
 	return $actions;
 }
-
-################################################################################
-// Change Text for Publish Box
-################################################################################
-function wps_translation_mangler($translation, $text, $domain) {
-        global $post;
-    if (isset($post->post_type) == 'properties') {
-        $translations = &get_translations_for_domain( $domain);
-        if ( $text == 'Scheduled for: <b>%1$s</b>') {
-            return $translations->translate( 'Listed Date: <b>%1$s</b>' );
-        }
-        if ( $text == 'Published on: <b>%1$s</b>') {
-            return $translations->translate( 'Listed Date: <b>%1$s</b>' );
-        }
-        if ( $text == 'Publish <b>immediately</b>') {
-            return $translations->translate( 'Listed Date: <b>%1$s</b>' );
-        }
-    }
-    return $translation;
-}
-add_filter('gettext', 'wps_translation_mangler', 10, 4);
-
-
 
 
 

@@ -33,7 +33,7 @@ function agents_listing_register() {
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => null,
-		'supports' => array('title','editor','thumbnail'),
+		'supports' => array('title','editor','thumbnail', 'excerpt', 'revisions', 'publicize', 'wpcom-markdown', 'page-attributes'),
 		'has_archive' => true
 	  );
  	register_post_type( 'agents' , $args );
@@ -194,45 +194,6 @@ function agent_save_data($post_id) {
 }
 
 ################################################################################
-// Enable Sort Menu
-################################################################################
-function agents_listing_enable_sort() {
-    add_submenu_page('edit.php?post_type=agents', 'Sort Agents', 'Sort', 'edit_posts', basename(__FILE__), 'agents_listing_sort');
-}
-add_action('admin_menu' , 'agents_listing_enable_sort');
-
-################################################################################
-// Enable Sort Admin
-################################################################################
-function agents_listing_sort() {
-	$agents = new WP_Query('post_type=agents&posts_per_page=-1&orderby=menu_order&order=ASC');
-?>
-	<div class="wrap">
-	<h3>Sort Agents <img src="<?php bloginfo('url'); ?>/wp-admin/images/loading.gif" id="loading-animation" /></h3>
-	<ul id="agents-list">
-	<?php while ( $agents->have_posts() ) : $agents->the_post(); ?>
-		<li id="<?php the_id(); ?>"><?php the_title(); ?></li>
-	<?php endwhile; ?>
-	</div><!-- End div#wrap //-->
-
-<?php
-}
-
-################################################################################
-// Load Javascript Files
-################################################################################
-function agents_listing_print_scripts() {
-	global $pagenow;
-
-	$pages = array('edit.php');
-	if (in_array($pagenow, $pages)) {
-		wp_enqueue_script('jquery-ui-sortable');
-		wp_enqueue_script('agents_sorting', WP_PLUGIN_URL. '/real-estate-by-rewebapps/js/agentsorting.min.js');
-	}
-}
-add_action( 'admin_print_scripts', 'agents_listing_print_scripts' );
-
-################################################################################
 // Loading All CSS Stylesheets
 ################################################################################
 function agents_listing_print_styles() {
@@ -359,29 +320,6 @@ function the_agent_properties() {
     endif;
 }
 
-
-################################################################################
-// Setup Pagination
-################################################################################
-function agent_paginate() {
-	global $wp_query, $wp_rewrite;
-	$wp_query->query_vars['paged'] > 1 ? $current = $wp_query->query_vars['paged'] : $current = 1;
-	$pagination = array(
-		'base' => @add_query_arg('page','%#%'),
-		'format' => '',
-		'total' => $wp_query->max_num_pages,
-		'current' => $current,
-		'show_all' => true,
-		'type' => 'plain'
-	);
-	if( $wp_rewrite->using_permalinks() ) $pagination['base'] = user_trailingslashit( trailingslashit( remove_query_arg( 's', get_pagenum_link( 1 ) ) ) . 'page/%#%/', 'paged' );
-	if( !empty($wp_query->query_vars['s']) ) $pagination['add_args'] = array( 's' => get_query_var( 's' ) );
-	echo paginate_links( $pagination );
-}
-function agents_posts_per_page($query) {
-    if ( $query->query_vars['post_type'] == 'agents' && is_post_type_archive() ) $query->query_vars['posts_per_page'] = 16;
-    return $query;
-}
 
 ################################################################################
 // Remove quick edit for Agents

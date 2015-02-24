@@ -209,7 +209,7 @@ function neighborhood_register() {
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => null,
-		'supports' => array('title','editor','thumbnail', 'tags'),
+		'supports' => array('title','editor','thumbnail', 'tags', 'excerpt', 'revisions', 'publicize', 'wpcom-markdown', 'page-attributes'),
 		'has_archive' => true
 	  );
 
@@ -305,11 +305,18 @@ function rewa_cpt_neighborhood_custom_column($column_name, $post_id) {
 }
 
 function the_neigh_gallery() {
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+	if (is_plugin_active('nextgen-gallery/nggallery.php')) {
+
 	$neigh_gallery_id = get_post_meta(get_the_ID(), 'dbt_select', true);
 	if ($neigh_gallery_id == 'none') { } else {
 		echo '<div class="prop-gallery">';
 		echo do_shortcode('[nggallery id='.$neigh_gallery_id.' template=galleryview images=0]');
 		echo '</div>';
+	 }
+	 } else {
+		 echo do_shortcode('[gallery]');
 	 }
 }
 
@@ -334,11 +341,7 @@ function the_neigh_zip() {
 		echo $the_neigh_zip;
 	 }
 }
-function neighborhoods_posts_per_page($query) {
-    if ( isset($query->query_vars['post_type']) == 'neighborhoods' ) $query->query_vars['posts_per_page'] = 5;
-    return $query;
-}
-if ( !is_admin() ) add_filter( 'pre_get_posts', 'neighborhoods_posts_per_page' );
+
 
 ################################################################################
 // Remove quick edit for Neighborhoods
@@ -356,8 +359,6 @@ function remove_neighborhoods_row_actions( $actions, $post )
 
 	return $actions;
 }
-
-
 
 
 ################################################################################
